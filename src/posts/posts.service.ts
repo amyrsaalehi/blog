@@ -1,3 +1,4 @@
+import { UpdatePostInput } from './../dtos/updatePost.input';
 import { HttpException, Injectable } from '@nestjs/common';
 import { AddPostInput } from '../dtos/addpost.input'
 
@@ -28,9 +29,23 @@ export class PostsService {
     return this.posts;
   }
 
+  async updatePost(input: UpdatePostInput): Promise<Post[]> {
+    const postIndex = this.posts.findIndex(post => post.id === input.id)
+
+    if (input.title) {
+      this.posts[postIndex].title = input.title
+    }
+
+    if (input.body) {
+      this.posts[postIndex].body = input.body
+    }
+
+    return this.posts;
+  }
+
   deletePost(id: number): Post[] {
     const postIndex = this.posts.findIndex(post => post.id === id)
-    if(postIndex === -1) {
+    if (postIndex === -1) {
       throw new HttpException('Post Not Found', 404)
     }
 

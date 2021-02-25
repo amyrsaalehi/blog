@@ -1,3 +1,4 @@
+import { UpdatePostInput } from './../dtos/updatePost.input';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { PostsService } from './posts.service';
 import { AddPostInput } from '../dtos/addpost.input';
@@ -27,6 +28,13 @@ export class PostsResolver {
     @Args('input') input: AddPostInput
   ) {
     return this.postService.addPost(input)
+  }
+
+  @Mutation(type => [Post])
+  async updatePost(
+    @Args('input') input: UpdatePostInput
+  ) {
+    return this.postService.updatePost(input)
   }
 
   @Mutation(type => [Post])
